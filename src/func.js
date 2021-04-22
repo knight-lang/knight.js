@@ -480,5 +480,9 @@ register('S', (str, start, len, repl) => {
 	len = len.toNumber();
 	repl = repl.toString();
 
-	return new Str(str.replace(str.substr(start, len), repl) || "");
+	if (str.length == start) {
+		return new Str(str + repl);
+	}
+
+	return new Str(str.substr(0, start) + repl + str.substr(start + len));
 });

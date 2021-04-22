@@ -113,7 +113,13 @@ export class Int extends Literal {
 	 * @return {Int} - The result of the exponentiation.
 	 */
 	pow(rhs) {
-		return new Int(Math.trunc(this._data ** rhs.toNumber()));
+		const rhsInt = rhs.toNumber();
+
+		if (this._data === 0 && rhsInt < 0) {
+			throw new RuntimeError('Cannot exponentiate zero to a negative power');
+		} else {
+			return new Int(Math.trunc(this._data ** rhsInt));
+		}
 	}
 
 	/**
