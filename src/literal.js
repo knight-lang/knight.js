@@ -65,6 +65,15 @@ export class Literal extends Value {
 	}
 
 	/**
+	 * Converts this class's `_data` to a JavaScript `array`.
+	 *
+	 * @return {Array<Value>}
+	 */
+	toArray() {
+		return Array.from(this._data);
+	}
+
+	/**
 	 * A `Literal` is only equal to another instance of the same type_, which
 	 * also has the same `_data`.
 	 *

@@ -96,11 +96,46 @@ export class Value {
 	/**
 	 * Converts this Value to a JavaScript boolean.
 	 *
-	 * The default implementation simply calls `toBoolea()` on `run()`'s result.
+	 * The default implementation simply calls `toBoolean()` on `run()`'s result.
 	 *
 	 * @return {boolean}
 	 */
 	toBoolean() {
 		return this.run().toBoolean();
+	}
+
+
+	/**
+	 * Returns `this` compared to `rhs`.
+	 *
+	 * @abstract
+	 * @param {Value} - The value to compare with.
+	 * @return {number} a negative, zero, or positive number corresponding to
+	 *                  less than, equal to, or greater than.
+	 */
+	cmp(rhs) {
+		throw new Error;
+	}
+
+	/**
+	 * Checks to see if `this.cmp(rhs)` is negative.
+	 *
+	 *
+	 * @param {Value} rhs - The value against which to compare.
+	 * @return {boolean} - Whether or not `this` is less than `rhs`.
+	 */
+	lth(rhs) {
+		return this.cmp(rhs) < 0;
+	}
+
+	/**
+	 * Checks to see if `this.cmp(rhs)` is positive.
+	 *
+	 *
+	 * @param {Value} rhs - The value against which to compare.
+	 * @return {boolean} - Whether or not `this` is greater than `rhs`.
+	 */
+	gth(rhs) {
+		return this.cmp(rhs) > 0;
 	}
 }

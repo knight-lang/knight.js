@@ -17,8 +17,7 @@ export class Bool extends Literal {
 	 * Attempts to parse a `Bool` from `stream`.
 	 *
 	 * @param {Stream} stream - The stream from which to parse.
-	 * @return {Bool|null} - The parsed `Bool`, or `null` if the stream did not
-	 *                       start with `T` or `F`.
+	 * @return {Bool|null} - The parsed `Bool`, or `null` if the stream did not start with `T`/`F`.
 	 */
 	static parse(stream) {
 		const match = stream.match(/^([TF])[A-Z]*/, 1);
@@ -29,6 +28,7 @@ export class Bool extends Literal {
 	/**
 	 * Provides a debugging representation of this class.
 	 *
+	 * @override
 	 * @return {string}
 	 */
 	dump() {
@@ -36,29 +36,21 @@ export class Bool extends Literal {
 	}
 
 	/**
-	 * Checks to see if `this` is less than `rhs`.
-	 *
-	 * This will only return true if `this._data` is false and `rhs.toBoolean()`
-	 * is true.
-	 *
-	 * @param {Value} rhs - The value against which to compare.
-	 * @return {boolean} - Whether or not `this` is less than `rhs`.
+	 * Compares `this` to `rhs`.
+	 * 
+	 * This returns a positive number if `this` is true and `rhs` if falsey,
+	 * a negative number if `this` is false and `rhs` is truthy, and zero otherwise.
+	 * 
+	 * @override
+	 * @param {Value}
+	 * @return {number} 
 	 */
-	lth(rhs) {
-		return !this._data && rhs.toBoolean();
+	cmp(rhs) {
+		return this._data - rhs.toBoolean()._data;
 	}
 
-	/**
-	 * Checks to see if `this` is greater than `rhs`.
-	 *
-	 * This will only return true if `this._data` is true and `rhs.toBoolean()`
-	 * is false.
-	 *
-	 * @param {Value} rhs - The value against which to compare.
-	 * @return {boolean} - Whether or not `this` is greater than `rhs`.
-	 */
-	gth(rhs) {
-		return this._data && !rhs.toBoolean();
+	toList() {
+		return this._data ? [this] : [];
 	}
 }
 

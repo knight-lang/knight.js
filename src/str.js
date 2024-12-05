@@ -17,7 +17,7 @@ export class Str extends Literal {
 	/**
 	 * Attempts to parse a `Str` from the `stream`.
 	 *
-	 * @param {Stream}  stream - The stream from which to parse.
+	 * @param {Stream} stream - The stream from which to parse.
 	 * @returns {Str|null} - The parsed `Str`, or `null` if the stream did not
 	 *                       start with a `Str`.
 	 * @throws {ParseError} If a starting quote, but no ending quote, is parsed.
