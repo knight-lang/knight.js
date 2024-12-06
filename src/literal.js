@@ -65,6 +65,13 @@ export class Literal extends Value {
 	}
 
 	/**
+	 * @abstract
+	 */
+	toArray() {
+		throw new Error;
+	}
+
+	/**
 	 * A `Literal` is only equal to another instance of the same type_, which
 	 * also has the same `_data`.
 	 *

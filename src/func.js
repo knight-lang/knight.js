@@ -1,11 +1,13 @@
 import { readSync } from 'fs';
 import { execSync } from 'child_process';
+import 'readline';
 
 import { Value, TYPES } from './value.js';
 import { Bool } from './bool.js';
 import { Ident } from './ident.js';
 import { Int } from './int.js';
 import { Null } from './null.js';
+import { List } from './list.js';
 import { Str } from './str.js';
 import { Stream } from './stream.js';
 import { ParseError } from './error.js';
@@ -174,7 +176,7 @@ register('P', () => {
 	let buf = Buffer.alloc(1);
 
 	do {
-		readSync(0, buf, 0, 1);
+		if (!readSync(0, buf, 0, 1)) break;
 
 		if (buf[0] == 0x00) {
 			break;
@@ -223,7 +225,7 @@ register('C', block => block.run().run());
  * @param {Value} command - The command to run.
  * @return {Str} - The stdout of `command`.
  */
-register('`', command => new Str(execSync(command.toString()).toString()));
+register('$', command => new Str(execSync(command.toString()).toString()));
 
 /**
  * Exits the program with the given status code.
@@ -246,7 +248,7 @@ register('!', arg => new Bool(!arg.toBoolean()));
  * @param {Value} str - The string whose chars will be counted.
  * @return {Int} - The amount characters iwthin `str`.
  */
-register('L', str => new Int(str.toString().length));
+register('L', arg => new Int(arg.toArray().length));
 
 /**
  * Writes the debug representation of `value` to stdout, without a trailing
@@ -285,6 +287,12 @@ register('O', input => {
 	return new Null();
 });
 
+register('~', input => new Int(-input.toNumber()));
+register(',', input => new List([input.run()]));
+register('[', input => input.run().head());
+register(']', input => input.run().tail());
+register('A', input => input.run().ascii());
+
 /**
  * Adds `lhs` and `rhs` together.
  *
@@ -292,7 +300,7 @@ register('O', input => {
  * @param {Value} rhs - The addend.
  * @return {Value} - The summation `rhs + lhs`.
  */
-register('+', (lhs, rhs) => lhs.run().add(rhs.run()));
+register('+', (lhs, rhs) => lhs.run().add(rhs));
 
 /**
  * Subtracts `lhs` from `rhs`.
@@ -301,7 +309,7 @@ register('+', (lhs, rhs) => lhs.run().add(rhs.run()));
  * @param {Value} rhs - The subtrahend.
  * @return {Value} - The difference `rhs - lhs`.
  */
-register('-', (lhs, rhs) => lhs.run().sub(rhs.run()));
+register('-', (lhs, rhs) => lhs.run().sub(rhs));
 
 /**
  * Multiplies `lhs` and `rhs` together.
@@ -310,7 +318,7 @@ register('-', (lhs, rhs) => lhs.run().sub(rhs.run()));
  * @param {Value} rhs - The multiplier.
  * @return {Value} - The product `lhs * rhs`.
  */
-register('*', (lhs, rhs) => lhs.run().mul(rhs.run()));
+register('*', (lhs, rhs) => lhs.run().mul(rhs));
 
 /**
  * Divides `rhs` by `lhs`.
@@ -319,7 +327,7 @@ register('*', (lhs, rhs) => lhs.run().mul(rhs.run()));
  * @param {Value} rhs - The divisor.
  * @return {Value} - The quotient `lhs / rhs`.
  */
-register('/', (lhs, rhs) => lhs.run().div(rhs.run()));
+register('/', (lhs, rhs) => lhs.run().div(rhs));
 
 /**
  * Modulos `rhs` by `lhs`.
@@ -328,7 +336,7 @@ register('/', (lhs, rhs) => lhs.run().div(rhs.run()));
  * @param {Value} rhs - The divisor.
  * @return {Value} - The value `lhs (mod rhs)`.
  */
-register('%', (lhs, rhs) => lhs.run().mod(rhs.run()));
+register('%', (lhs, rhs) => lhs.run().mod(rhs));
 
 /**
  * Raises `rhs` to the `lhs`th power.
@@ -337,7 +345,7 @@ register('%', (lhs, rhs) => lhs.run().mod(rhs.run()));
  * @param {Value} rhs - The exponent.
  * @return {Value} - The value `lhs ^ rhs`.
  */
-register('^', (lhs, rhs) => lhs.run().pow(rhs.run()));
+register('^', (lhs, rhs) => lhs.run().pow(rhs));
 
 /**
  * Checks to see if `rhs` is less than `lhs`.
@@ -346,7 +354,7 @@ register('^', (lhs, rhs) => lhs.run().pow(rhs.run()));
  * @param {Value} rhs - The value to compare against.
  * @return {boolean} - Whether `lhs` is less than `rhs` or not.
  */
-register('<', (lhs, rhs) => new Bool(lhs.run().lth(rhs.run())));
+register('<', (lhs, rhs) => new Bool(lhs.run().cmp(rhs) < 0));
 
 /**
  * Checks to see if `rhs` is greater than `lhs`.
@@ -355,7 +363,7 @@ register('<', (lhs, rhs) => new Bool(lhs.run().lth(rhs.run())));
  * @param {Value} rhs - The value to compare against.
  * @return {boolean} - Whether `lhs` is greater than `rhs` or not.
  */
-register('>', (lhs, rhs) => new Bool(lhs.run().gth(rhs.run())));
+register('>', (lhs, rhs) => new Bool(lhs.run().cmp(rhs) > 0));
 
 /**
  * Checks to see if `rhs` is equal to `rhs`.
@@ -373,10 +381,7 @@ register('?', (lhs, rhs) => new Bool(lhs.run().eql(rhs.run())));
  * @param {Value} rhs - The value to return if `lhs` is truthy.
  * @return {Value} - When `lhs` is truthy, `rhs`; otherwise, `lhs`.
  */
-register('&', (lhs, rhs) => {
-	lhs = lhs.run();
-	return lhs.toBoolean() ? rhs.run() : lhs;
-});
+register('&', (lhs, rhs) => (lhs = lhs.run()).toBoolean() ? rhs.run() : lhs);
 
 /**
  * Returns `lhs` or `rhs`, depending on whether `lhs` is truthy or not.
@@ -385,10 +390,7 @@ register('&', (lhs, rhs) => {
  * @param {Value} rhs - The value to return if `lhs` is false.
  * @return {Value} - When `lhs` is truthy, `lhs`; otherwise, `rhs`.
  */
-register('|', (lhs, rhs) => {
-	lhs = lhs.run();
-	return lhs.toBoolean() ? lhs : rhs.run();
-});
+register('|', (lhs, rhs) => (lhs = lhs.run()).toBoolean() ? lhs : rhs.run());
 
 /**
  * Runs `lhs`, then runs and returns `rhs`.
@@ -397,10 +399,7 @@ register('|', (lhs, rhs) => {
  * @param {Value} rhs - The second value to run.
  * @return {Value} - The result of running `rhs`.
  */
-register(';', (lhs, rhs) => {
-	lhs.run();
-	return rhs.run();
-});
+register(';', (lhs, rhs) => (lhs.run(), rhs.run()));
 
 /**
  * Assigns `value` to `ident`.
@@ -442,9 +441,7 @@ register('W', (condition, body) => {
  * @param {Value} iffalse - The value to execute and return if `cond` is falsey.
  * @return {Value} - The result of running `iftrue` or `iffalse`.
  */
-register('I', (cond, iftrue, iffalse) => {
-	return cond.toBoolean() ? iftrue.run() : iffalse.run();
-});
+register('I', (cond, iftrue, iffalse) => cond.toBoolean() ? iftrue.run() : iffalse.run());
 
 /**
  * Gets the specified substring of `str`.
@@ -456,13 +453,7 @@ register('I', (cond, iftrue, iffalse) => {
  * @param {Value} len - The length of the substring.
  * @return {Str} - The specified substring.
  */
-register('G', (str, start, len) => {
-	str = str.toString();
-	start = start.toNumber();
-	len = len.toNumber();
-
-	return new Str(str.substr(start, len) || "");
-});
+register('G', (collection, start, len) => collection.run().get(start, len));
 
 /**
  * Returns a new string with the specified range of `str` replaced with `repl`.
@@ -474,15 +465,4 @@ register('G', (str, start, len) => {
  * @param {Value} len - The length of the replacement.
  * @param {Value} repl - The value to substitute for the specified range.
  */
-register('S', (str, start, len, repl) => {
-	str = str.toString();
-	start = start.toNumber();
-	len = len.toNumber();
-	repl = repl.toString();
-
-	if (str.length == start) {
-		return new Str(str + repl);
-	}
-
-	return new Str(str.substr(0, start) + repl + str.substr(start + len));
-});
+register('S', (collection, start, len, repl) => collection.run().set(start, len, repl));

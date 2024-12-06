@@ -1,5 +1,7 @@
 import { TYPES } from './value.js';
 import { ParseError } from './error.js';
+import { List } from './list.js';
+import { Int } from './int.js';
 import { Literal } from './literal.js';
 
 /**
@@ -52,13 +54,17 @@ export class Str extends Literal {
 		return parseInt(this._data, 10) || 0;
 	}
 
+	toArray() {
+		return this._data.split('').map(chr => new Str(chr));
+	}
+
 	/**
 	 * Provides a debugging representation of this class.
 	 *
 	 * @return {string}
 	 */
 	dump() {
-		return `String(${this})`;
+		return JSON.stringify(this._data);
 	}
 
 	/**
@@ -81,24 +87,45 @@ export class Str extends Literal {
 		return new Str(this._data.repeat(rhs.toNumber()));
 	}
 
-	/**
-	 * Returns a whether `this` is less than `rhs`, lexicographically.
-	 *
-	 * @param {Value} rhs - The value to be converted to a string and compared.
-	 * @return {boolean} - True if `this` is less than `rhs`.
-	 */
-	lth(rhs) {
-		return this._data < rhs.toString();
+	cmp(rhs) {
+		rhs = rhs.toString();
+		return this._data < rhs ?  -1 : this._data > rhs ? 1 : 0;
 	}
 
-	/**
-	 * Returns a whether `this` is less than `rhs`, lexicographically.
-	 *
-	 * @param {Value} rhs - The value to be converted to a string and compared.
-	 * @return {boolean} - True if `this` is less than `rhs`.
-	 */
-	gth(rhs) {
-		return this._data > rhs.toString();
+	ascii() {
+		return new Int(this._data.charCodeAt(0));
+	}
+
+	head() {
+		if (this._data.length === 0) {
+			throw new RuntimeError("head on empty string");
+		}
+
+		return new Str(this._data[0]);
+	}
+
+	tail() {
+		if (this._data.length === 0) {
+			throw new RuntimeError("tail on empty string");
+		}
+
+		return new Str(this._data.substr(1));
+	}
+
+	get(start, length) {
+		return new Str(this._data.substr(start.toNumber(), length.toNumber()) || "");
+	}
+
+	set(start, length, repl) {
+		start = start.toNumber();
+		length = length.toNumber();
+		repl = repl.toString();
+
+		if (this._data.length == start) {
+			return new Str(this._data + repl);
+		}
+
+		return new Str(this._data.substr(0, start) + repl + this._data.substr(start + length));
 	}
 }
 

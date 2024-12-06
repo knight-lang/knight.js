@@ -1,5 +1,7 @@
 import { TYPES } from './value.js';
 import { Literal } from './literal.js';
+import { RuntimeError } from './error.js';
+import { Str } from './str.js';
 
 /**
  * @typedef {import('./stream.js').Stream} Stream
@@ -34,8 +36,24 @@ export class Int extends Literal {
 	 * @return {string}
 	 */
 	dump() {
-		return `Number(${this})`;
+		return this.toString();
 	}
+
+	toArray() {
+		if (this._data === 0) {
+			return [this];
+		}
+
+		var acc = [];
+		var num = Math.abs(this._data);
+		while (num !== 0 && num !== -1) {
+			acc = acc.concat([new Int(Math.sign(this._data) * (num % 10))]);
+			num = Math.floor(num / 10);
+		}
+
+		return acc.reverse();
+	}
+
 
 	/**
 	 * Returns a new `Int` that is the result of adding `rhs` to `this`.
@@ -79,7 +97,7 @@ export class Int extends Literal {
 	div(rhs) {
 		const rhsInt = rhs.toNumber();
 
-		if (rhsInt === 0) {
+		if (!rhsInt) {
 			throw new RuntimeError('Cannot divide by zero');
 		} else {
 			return new Int(Math.trunc(this._data / rhsInt));
@@ -96,7 +114,7 @@ export class Int extends Literal {
 	mod(rhs) {
 		const rhsInt = rhs.toNumber();
 
-		if (rhsInt === 0) {
+		if (!rhsInt) {
 			throw new RuntimeError('Cannot modulo by zero');
 		} else {
 			return new Int(this._data % rhsInt);
@@ -115,7 +133,7 @@ export class Int extends Literal {
 	pow(rhs) {
 		const rhsInt = rhs.toNumber();
 
-		if (this._data === 0 && rhsInt < 0) {
+		if (!this._data && rhsInt < 0) {
 			throw new RuntimeError('Cannot exponentiate zero to a negative power');
 		} else {
 			return new Int(Math.trunc(this._data ** rhsInt));
@@ -128,18 +146,12 @@ export class Int extends Literal {
 	 * @param {Value} rhs - The value to convert to a number and compare against.
 	 * @return {boolean} - Whether `this` is numerically less than `rhs`.
 	 */
-	lth(rhs) {
-		return this._data < rhs.toNumber();
+	cmp(rhs) {
+		return this._data - rhs.toNumber();
 	}
 
-	/**
-	 * Returns whether `this` is numerically greater than `rhs`.
-	 *
-	 * @param {Value} rhs - The value to convert to a number and compare against.
-	 * @return {boolean} - Whether `this` is numerically greater than `rhs`.
-	 */
-	gth(rhs) {
-		return this._data > rhs.toNumber();
+	ascii () {
+		return new Str(String.fromCharCode(this._data));
 	}
 }
 

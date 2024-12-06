@@ -32,7 +32,11 @@ export class Bool extends Literal {
 	 * @return {string}
 	 */
 	dump() {
-		return `Boolean(${this})`;
+		return this.toString();
+	}
+
+	toArray() {
+		return this._data ? [this] : [];
 	}
 
 	/**
@@ -44,21 +48,8 @@ export class Bool extends Literal {
 	 * @param {Value} rhs - The value against which to compare.
 	 * @return {boolean} - Whether or not `this` is less than `rhs`.
 	 */
-	lth(rhs) {
-		return !this._data && rhs.toBoolean();
-	}
-
-	/**
-	 * Checks to see if `this` is greater than `rhs`.
-	 *
-	 * This will only return true if `this._data` is true and `rhs.toBoolean()`
-	 * is false.
-	 *
-	 * @param {Value} rhs - The value against which to compare.
-	 * @return {boolean} - Whether or not `this` is greater than `rhs`.
-	 */
-	gth(rhs) {
-		return this._data && !rhs.toBoolean();
+	cmp(rhs) {
+		return +this._data - +rhs.toBoolean();
 	}
 }
 

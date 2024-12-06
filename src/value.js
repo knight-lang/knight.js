@@ -96,11 +96,22 @@ export class Value {
 	/**
 	 * Converts this Value to a JavaScript boolean.
 	 *
-	 * The default implementation simply calls `toBoolea()` on `run()`'s result.
+	 * The default implementation simply calls `toBoolean()` on `run()`'s result.
 	 *
 	 * @return {boolean}
 	 */
 	toBoolean() {
 		return this.run().toBoolean();
+	}
+
+	/**
+	 * Converts this Value to a JavaScript array.
+	 *
+	 * The default implementation simply calls `toArray()` on `run()`'s result.
+	 *
+	 * @return {array}
+	 */
+	toArray() {
+		return this.run().toArray();
 	}
 }

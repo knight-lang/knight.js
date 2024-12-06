@@ -26,7 +26,7 @@ export class Stream {
 	 */
 	stripWhitespace() {
 		// simply ignore the return value--it can fail for all we care.
-		this.match(/^([\]\[\s(){}:]+|#[^\n]*(\n|$))*/);
+		this.match(/^([\s():]+|#[^\n]*(\n|$))*/);
 	}
 
 	/**

@@ -36,7 +36,15 @@ export class Null extends Literal {
 	 * @return {string}
 	 */
 	dump() {
-		return 'Null()';
+		return 'null';
+	}
+
+	toString() {
+		return '';
+	}
+
+	toArray() {
+		return [];
 	}
 
 	/**
@@ -59,17 +67,7 @@ export class Null extends Literal {
 	 * @param {Value} _rhs - Ignored.
 	 * @throws {RuntimeError} This is always thrown.
 	 */
-	lth(_rhs) {
-		throw new RuntimeError("Cannot compare Null.");
-	}
-
-	/**
-	 * Comparisons with `Null` are invalid, and this always fails.
-	 *
-	 * @param {Value} _rhs - Ignored.
-	 * @throws {RuntimeError} This is always thrown.
-	 */
-	gth(_rhs) {
+	cmp(_rhs) {
 		throw new RuntimeError("Cannot compare Null.");
 	}
 }
