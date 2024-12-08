@@ -1,14 +1,14 @@
 import { TYPES } from './value.js';
-import { Literal } from './literal.js';
+import Literal from './literal.js';
 import { RuntimeError } from './error.js';
-import { Str } from './str.js';
+import Str from './str.js';
 
 /**
  * @typedef {import('./stream.js').Stream} Stream
  * @typedef {import('./value.js').Value} Value
  */
 
-export class List extends Literal {
+export default class List extends Literal {
 	/**
 	 * Attempts to parse an `Int` from the `stream`.
 	 *

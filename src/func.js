@@ -1,15 +1,14 @@
 import { readSync } from 'fs';
 import { execSync } from 'child_process';
-import 'readline';
 
 import { Value, TYPES } from './value.js';
-import { Bool } from './bool.js';
-import { Ident } from './ident.js';
-import { Int } from './int.js';
-import { Null } from './null.js';
-import { List } from './list.js';
-import { Str } from './str.js';
-import { Stream } from './stream.js';
+import Bool from './bool.js';
+import Ident from './ident.js';
+import Int from './int.js';
+import Null from './null.js';
+import List from './list.js';
+import Str from './str.js';
+import Stream from './stream.js';
 import { ParseError } from './error.js';
 import { run } from './knight.js';
 
@@ -29,7 +28,7 @@ const FUNCTIONS = {};
 /**
  * A class that represents a function and its associated arguments.
  */
-export class Func extends Value {
+export default class Func extends Value {
 	/**
 	 * The array of arguments associated with this function, if any.
 	 *
@@ -176,7 +175,10 @@ register('P', () => {
 	let buf = Buffer.alloc(1);
 
 	do {
-		if (!readSync(0, buf, 0, 1)) break;
+		if (!readSync(0, buf, 0, 1)) {
+			if (!line.length) return new Null();
+			break;
+		}
 
 		if (buf[0] == 0x00) {
 			break;
@@ -185,7 +187,7 @@ register('P', () => {
 		line += buf;
 	} while (buf[0] != 0x0a);
 
-	return new Str(line);
+	return new Str(line.replace(/\r*\n?$/, ''));
 });
 
 /**

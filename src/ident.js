@@ -19,7 +19,7 @@ const ENVIRONMENT = {};
  * As per the specs, all identifiers are global. As such, there is no scoping
  * whatsoever: A single `ENVIRONMENT` is used.
  */
-export class Ident extends Value {
+export default class Ident extends Value {
 	/** @type {string} */
 	#ident;
 

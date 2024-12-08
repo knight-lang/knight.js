@@ -9,7 +9,7 @@
  *
  * @see Value.parse
  */
-export class Stream {
+export default class Stream {
 	/** @type {string} */
 	#source;
 

@@ -1,8 +1,8 @@
 import { TYPES } from './value.js';
 import { ParseError } from './error.js';
-import { List } from './list.js';
-import { Int } from './int.js';
-import { Literal } from './literal.js';
+import List from './list.js';
+import Int from './int.js';
+import Literal from './literal.js';
 
 /**
  * @typedef {import('./stream.js').Stream} Stream
@@ -15,7 +15,7 @@ import { Literal } from './literal.js';
  * @see Value - For more information on why we don't simply use `string`s.
  * @extends {Literal<string>}
  */
-export class Str extends Literal {
+export default class Str extends Literal {
 	/**
 	 * Attempts to parse a `Str` from the `stream`.
 	 *

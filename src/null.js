@@ -1,6 +1,6 @@
 import { TYPES } from './value.js';
 import { RuntimeError } from './error.js';
-import { Literal } from './literal.js';
+import Literal from './literal.js';
 
 /**
  * @typedef {import('./stream.js').Stream} Stream
@@ -13,7 +13,7 @@ import { Literal } from './literal.js';
  * @see Value - For more information on why we don't simply use `null`.
  * @extends {Literal<null>}
  */
-export class Null extends Literal {
+export default class Null extends Literal {
 	/**
 	 * Attempts to parse a `Null` from the `stream`.
 	 *

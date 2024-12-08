@@ -8,7 +8,7 @@ import { Value } from './value.js';
  * @abstract
  * @see Value - For more information on why we don't simply use built-ins.
  */
-export class Literal extends Value {
+export default class Literal extends Value {
 	/**
 	 * The data associated with this Literal.
 	 *

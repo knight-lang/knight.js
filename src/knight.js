@@ -1,14 +1,14 @@
 import { ParseError } from './error.js';
 import { Value } from './value.js';
-import { Stream } from './stream.js';
+import Stream from './stream.js';
 
-import {   } from './bool.js';
-import { Ident } from './ident.js';
-import { Int } from './int.js';
-import { Null } from './null.js';
-import { Str } from './str.js';
-import { Func } from './func.js';
-import { List } from './list.js';
+import Bool from './bool.js';
+import Ident from './ident.js';
+import Int from './int.js';
+import Null from './null.js';
+import Str from './str.js';
+import Func from './func.js';
+import List from './list.js';
 
 // Only KnightError is exported by default.
 export { KnightError } from './error.js';
