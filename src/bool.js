@@ -1,4 +1,4 @@
-import { TYPES } from './value.js';
+import Value from './value.js';
 import Literal from './literal.js';
 
 /**
@@ -58,4 +58,4 @@ export default class Bool extends Literal {
 }
 
 // Add the `Bool` class to the list of known types, so it can be parsed.
-TYPES.push(Bool);
+Value.TYPES.push(Bool);

@@ -1,5 +1,5 @@
 import { ParseError } from './error.js';
-import { Value } from './value.js';
+import Value from './value.js';
 import Stream from './stream.js';
 
 import Bool from './bool.js';

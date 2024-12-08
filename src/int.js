@@ -1,4 +1,4 @@
-import { TYPES } from './value.js';
+import Value from './value.js';
 import Literal from './literal.js';
 import { RuntimeError } from './error.js';
 import Str from './str.js';
@@ -156,4 +156,4 @@ export default class Int extends Literal {
 }
 
 // Add the `Int` class to the list of known types, so it can be parsed.
-TYPES.push(Int);
+Value.TYPES.push(Int);

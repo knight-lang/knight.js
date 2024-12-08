@@ -1,4 +1,4 @@
-import { Value } from './value.js';
+import Value from './value.js';
 
 /**
  * An abstract class that's used to indicate a type is a wrapper around a
