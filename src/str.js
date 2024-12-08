@@ -1,4 +1,4 @@
-import Value from './value.js';
+import { TYPES } from './value.js';
 import Int from './int.js';
 import Literal from './literal.js';
 import { ParseError } from './error.js';
@@ -33,7 +33,6 @@ export default class Str extends Literal {
 
 		// if we have a starting quote, it means the ending one didn't match.
 		const first = stream.peek();
-		console.log(first);
 		if (first === "'" || first === '"') {
 			throw new ParseError(`Unterminated quote encountered: ${stream}`);
 		}
@@ -130,4 +129,4 @@ export default class Str extends Literal {
 }
 
 // Add the `Str` class to the list of known types, so it can be parsed.
-Value.TYPES.push(Str);
+TYPES.push(Str);

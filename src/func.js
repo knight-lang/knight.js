@@ -1,7 +1,7 @@
 import { readSync } from 'fs';
 import { execSync } from 'child_process';
 
-import Value from './value.js';
+import Value, { TYPES } from './value.js';
 import Bool from './bool.js';
 import Ident from './ident.js';
 import Int from './int.js';
@@ -142,7 +142,7 @@ export default class Func extends Value {
 }
 
 // Add the `Func` class to the list of known types, so it can be parsed.
-Value.TYPES.push(Func);
+TYPES.push(Func);
 
 /**
  * Associates `name` with the function `func`, such that `Func.parse` recognizes

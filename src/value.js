@@ -3,6 +3,17 @@
  */
 
 /**
+ * The list of known types; used when parsing `Value`s.
+ *
+ * When parsing, this array will be traversed in order; the first matching
+ * value will be returned.
+ *
+ * @type {Type[]}
+ * @see Value.parse
+ */
+export const TYPES = [];
+
+/**
  * The parent class for all entities within Knight source code.
  *
  * While JavaScript itself has builtin types for booleans, numbers, strings,
@@ -21,17 +32,6 @@
  */
 export default class Value {
 	/**
-	 * The list of known types; used when parsing `Value`s.
-	 *
-	 * When parsing, this array will be traversed in order; the first matching
-	 * value will be returned.
-	 *
-	 * @type {Type[]}
-	 * @see Value.parse
-	 */
-	static TYPES = [];
-
-	/**
 	 * Attempts to parse out a new value from the given `stream`.
 	 *
 	 * @param {Stream} stream The stream to parse.
@@ -41,8 +41,8 @@ export default class Value {
 	static parse(stream) {
 		stream.stripWhitespace();
 
-		for (var i = 0; i < this.TYPES.length; i++) {
-			const match = this.TYPES[i].parse(stream);
+		for (var i = 0; i < TYPES.length; i++) {
+			const match = TYPES[i].parse(stream);
 
 			if (match) {
 				return match;

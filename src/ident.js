@@ -1,4 +1,4 @@
-import Value from './value.js';
+import Value, { TYPES } from './value.js';
 import { RuntimeError } from './error.js';
 
 /**
@@ -84,4 +84,4 @@ export default class Ident extends Value {
 }
 
 // Add the `Ident` class to the list of known types, so it can be parsed.
-Value.TYPES.push(Ident);
+TYPES.push(Ident);

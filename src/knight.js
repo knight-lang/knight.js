@@ -1,5 +1,6 @@
 import Value from './value.js';
 import Stream from './stream.js';
+import {} from './func.js';
 import { ParseError } from './error.js';
 
 // Only KnightError is exported by default.
@@ -12,7 +13,7 @@ export { KnightError } from './error.js';
  * @return {Value} The result of executing the code.
  */
 export function run(input) {
-	let value = Value.parse(new Stream(input.toString()));
+	const value = Value.parse(new Stream(input.toString()));
 
 	if (value === null) {
 		throw new ParseError('No value could be parsed!');

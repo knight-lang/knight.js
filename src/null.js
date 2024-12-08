@@ -1,4 +1,4 @@
-import Value from './value.js';
+import { TYPES } from './value.js';
 import Literal from './literal.js';
 import { RuntimeError } from './error.js';
 
@@ -67,4 +67,4 @@ export default class Null extends Literal {
 }
 
 // Add the `Null` class to the list of known types, so it can be parsed.
-Value.TYPES.push(Null);
+TYPES.push(Null);
