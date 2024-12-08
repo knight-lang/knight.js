@@ -70,7 +70,7 @@ export default class Ident extends Value {
 	 * Executes this identifier, returning its last assigned value.
 	 *
 	 * @return {Value} The last value associated with this identifier's name.
-	 * @throws {RuntimeError} - Thrown if this identifier was never assigned to.
+	 * @throws {RuntimeError} Thrown if this identifier was never assigned to.
 	 */
 	run() {
 		const value = ENVIRONMENT[this.#ident];

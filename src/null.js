@@ -4,12 +4,13 @@ import { RuntimeError } from './error.js';
 
 /**
  * @typedef {import('./stream.js')} Stream
+ * @typedef {import('./value.js')} Value
  */
 
 /**
  * The null type within Knight, used to represent the lack of a value.
  *
- * @see Value - For more information on why we don't simply use `null`.
+ * @see Value For more information on why we don't simply use `null`.
  * @extends {Literal<null>}
  */
 export default class Null extends Literal {

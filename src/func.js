@@ -33,7 +33,7 @@ export default class Func extends Value {
 	 * The array of arguments associated with this function, if any.
 	 *
 	 * @private
-	 * @type {Value[]}
+	 * @type {Array<Value>}
 	 */
 	#args;
 
@@ -59,9 +59,8 @@ export default class Func extends Value {
 	 * Attempts to parse a `Func` from `stream`.
 	 *
 	 * @param {Stream} stream The stream from which to parse.
-	 * @return {Func|null} The parsed `Func`, or `null` if the stream did not
-	 *                       start with a valid function name.
-	 * @throws {ParseError} - If not all the arguments could be parsed.
+	 * @return {Func?} The parsed `Func`, or `null` if the stream did not start with a valid fn name.
+	 * @throws {ParseError} If not all the arguments could be parsed.
 	 */
 	static parse(stream) {
 		const front = stream.peek();
@@ -94,7 +93,7 @@ export default class Func extends Value {
 	 *
 	 * @param {function} func The function execute when running `this`.
 	 * @param {string} name The name of this function, used when `dump`ing.
-	 * @param {Value[]} args The list of arguments to use when running.
+	 * @param {Array<Value>} args The list of arguments to use when running.
 	 */
 	constructor(func, name, args) {
 		super();
@@ -145,12 +144,11 @@ export default class Func extends Value {
 TYPES.push(Func);
 
 /**
- * Associates `name` with the function `func`, such that `Func.parse` recognizes
- * it.
+ * Associates `name` with the function `func`, such that `Func.parse` recognizes it.
  *
  * @param {string} name The name of the function; must be one letter long.
  * @param {function} func The function to associate with `name`.
- * @throw {Error} - Thrown when `name` is not exactly one letter long.
+ * @throw {Error} Thrown when `name` is not exactly one letter long.
  */
 export function register(name, func)  {
 	if (name.length !== 1) {

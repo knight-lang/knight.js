@@ -5,6 +5,7 @@ import { RuntimeError } from './error.js';
 
 /**
  * @typedef {import('./stream.js')} Stream
+ * @typedef {import('./value.js')} Value
  */
 
 /**
@@ -12,7 +13,7 @@ import { RuntimeError } from './error.js';
  *
  * As per the Knight specs, the only number type allowed are integers.
  *
- * @see Value - For more information on why we don't simply use `number`s.
+ * @see Value For more information on why we don't simply use `number`s.
  * @extends {Literal<number>}
  */
 export default class Int extends Literal {
@@ -96,7 +97,7 @@ export default class Int extends Literal {
 	 *
 	 * @param {Value} rhs The value to divide from `this`.
 	 * @return {Int} The result of the division.
-	 * @throws {RuntimeError} - Thrown if `rhs` is zero.
+	 * @throws {RuntimeError} Thrown if `rhs` is zero.
 	 */
 	div(rhs) {
 		const rhsInt = rhs.toNumber();
@@ -113,7 +114,7 @@ export default class Int extends Literal {
 	 *
 	 * @param {Value} rhs The base of the modulation.
 	 * @return {Int} The result of the modulo operation.
-	 * @throws {RuntimeError} - Thrown if `rhs` is zero.
+	 * @throws {RuntimeError} Thrown if `rhs` is zero.
 	 */
 	mod(rhs) {
 		const rhsInt = rhs.toNumber();

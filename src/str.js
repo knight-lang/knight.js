@@ -5,6 +5,7 @@ import { ParseError } from './error.js';
 
 /**
  * @typedef {import('./stream.js')} Stream
+ * @typedef {import('./value.js')} Value
  */
 
 /**

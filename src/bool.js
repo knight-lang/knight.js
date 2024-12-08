@@ -9,7 +9,7 @@ import Literal from './literal.js';
 /**
  * The boolean type within Knight, used to represent truthfulness.
  *
- * @see Value - For more information on why we don't simply use `true`/`false`.
+ * @see Value For more information on why we don't simply use `true`/`false`.
  * @extends {Literal<boolean>}
  */
 export default class Bool extends Literal {

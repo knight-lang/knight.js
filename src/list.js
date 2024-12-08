@@ -5,12 +5,13 @@ import { RuntimeError } from './error.js';
 
 /**
  * @typedef {import('./stream.js').Stream}
+ * @typedef {import('./value.js')} Value
  */
 
 /**
  * The list type within Knight.
  *
- * @see Value - For more information on why we don't simply use `Array`s.
+ * @see Value For more information on why we don't simply use `Array`s.
  * @extends {Literal<Array<Value>>}
  */
 export default class List extends Literal {

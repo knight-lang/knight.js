@@ -8,7 +8,7 @@
  * When parsing, this array will be traversed in order; the first matching
  * value will be returned.
  *
- * @type {Type[]}
+ * @type {Array<Type>}
  * @see Value.parse
  */
 export const TYPES = [];
