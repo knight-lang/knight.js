@@ -48,7 +48,7 @@ export default class Str extends Literal {
 	 * of `NaN`.
 	 *
 	 * @override
-	 * @return {number} - The numeric representation of this class.
+	 * @return {number} The numeric representation of this class.
 	 */
 	toNumber() {
 		return parseInt(this._data, 10) || 0;
@@ -70,8 +70,8 @@ export default class Str extends Literal {
 	/**
 	 * Returns a new `Str` with `this` concatenated with `rhs`.
 	 *
-	 * @param {Value} rhs - The value to append.
-	 * @return {Str} - The concatenation of `this` and `rhs`.
+	 * @param {Value} rhs The value to append.
+	 * @return {Str} The concatenation of `this` and `rhs`.
 	 */
 	add(rhs) {
 		return new Str(`${this}${rhs}`);
@@ -80,8 +80,8 @@ export default class Str extends Literal {
 	/**
 	 * Returns a new `Str` with `this` repeated `rhs` times.
 	 *
-	 * @param {Value} rhs - The amount of times that `this` will be repeated.
-	 * @return {Str} - `This` repeated `rhs` times.
+	 * @param {Value} rhs The amount of times that `this` will be repeated.
+	 * @return {Str} `This` repeated `rhs` times.
 	 */
 	mul(rhs) {
 		return new Str(this._data.repeat(rhs.toNumber()));

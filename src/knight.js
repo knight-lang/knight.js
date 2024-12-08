@@ -16,8 +16,8 @@ export { KnightError } from './error.js';
 /**
  * Parses and executes the input as Knight code.
  *
- * @param {string} input - The string to parse and execute.
- * @return {Value} - The result of executing the code.
+ * @param {string} input The string to parse and execute.
+ * @return {Value} The result of executing the code.
  */
 export function run(input) {
 	let value = Value.parse(new Stream(input.toString()));

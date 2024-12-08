@@ -15,7 +15,7 @@ export default class Stream {
 
 	/**
 	 * Creates a new stream with the given source.
-	 * @param {string} source - The source of the stream.
+	 * @param {string} source The source of the stream.
 	 */
 	constructor(source) {
 		this.#source = source;
@@ -32,7 +32,7 @@ export default class Stream {
 	/**
 	 * Peeks at the first character of the stream, without consuming it
 	 *
-	 * @return {string|null} - The first character of `this`, or `null` empty.
+	 * @return {string|null} The first character of `this`, or `null` empty.
 	 */
 	peek() {
 		return this.#source[0] || null;
@@ -42,11 +42,11 @@ export default class Stream {
 	 * Attempts to match the given `regex` at the start of the stream, returning
 	 * the `group`th group if successful.
 	 *
-	 * @param {RegExp} regex - The regular expression to match, which should have
+	 * @param {RegExp} regex The regular expression to match, which should have
 	 *                         an `^` (so as to only match the stream start).
 	 * @param {number} [group] - The group number to return; the default (0)
 	 *                           returns the entire match.
-	 * @return {string|null} - Returns the matched group, or `null` if no match.
+	 * @return {string|null} Returns the matched group, or `null` if no match.
 	 */
 	match(regex, group=0) {
 		const match = regex.exec(this.#source);
@@ -64,7 +64,7 @@ export default class Stream {
 	/**
 	 * Returns the remainder of the stream to be parsed.
 	 *
-	 * @return {string} - The remainder of the stream.
+	 * @return {string} The remainder of the stream.
 	 */
 	toString() {
 		return this.#source;

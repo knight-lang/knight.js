@@ -20,8 +20,8 @@ export default class Int extends Literal {
 	/**
 	 * Attempts to parse an `Int` from the `stream`.
 	 *
-	 * @param {Stream} stream - The stream from which to parse.
-	 * @return {Int|null} - The parsed `Int`, or `null` if the stream did not
+	 * @param {Stream} stream The stream from which to parse.
+	 * @return {Int|null} The parsed `Int`, or `null` if the stream did not
 	 *                      start with a `Int`.
 	 */
 	static parse(stream) {
@@ -58,8 +58,8 @@ export default class Int extends Literal {
 	/**
 	 * Returns a new `Int` that is the result of adding `rhs` to `this`.
 	 *
-	 * @param {Value} rhs - The value to add to `this`.
-	 * @return {Int} - The result of the addition.
+	 * @param {Value} rhs The value to add to `this`.
+	 * @return {Int} The result of the addition.
 	 */
 	add(rhs) {
 		return new Int(this._data + rhs.toNumber());
@@ -68,8 +68,8 @@ export default class Int extends Literal {
 	/**
 	 * Returns a new `Int` that is the result of subtracting `rhs` from `this`.
 	 *
-	 * @param {Value} rhs - The value to subtract from `this`.
-	 * @return {Int} - The result of the subtraction.
+	 * @param {Value} rhs The value to subtract from `this`.
+	 * @return {Int} The result of the subtraction.
 	 */
 	sub(rhs) {
 		return new Int(this._data - rhs.toNumber());
@@ -78,8 +78,8 @@ export default class Int extends Literal {
 	/**
 	 * Returns a new `Int` that is the result of multiplying `this` by `rhs`.
 	 *
-	 * @param {Value} rhs - The value to multiply from `this`.
-	 * @return {Int} - The result of the multiplication.
+	 * @param {Value} rhs The value to multiply from `this`.
+	 * @return {Int} The result of the multiplication.
 	 */
 	mul(rhs) {
 		return new Int(this._data * rhs.toNumber());
@@ -90,8 +90,8 @@ export default class Int extends Literal {
 	 *
 	 * Note that this will truncate the result of the division.
 	 *
-	 * @param {Value} rhs - The value to divide from `this`.
-	 * @return {Int} - The result of the division.
+	 * @param {Value} rhs The value to divide from `this`.
+	 * @return {Int} The result of the division.
 	 * @throws {RuntimeError} - Thrown if `rhs` is zero.
 	 */
 	div(rhs) {
@@ -107,8 +107,8 @@ export default class Int extends Literal {
 	/**
 	 * Returns a new `Int` that is the result of moduloing `this` by `this`.
 	 *
-	 * @param {Value} rhs - The base of the modulation.
-	 * @return {Int} - The result of the modulo operation.
+	 * @param {Value} rhs The base of the modulation.
+	 * @return {Int} The result of the modulo operation.
 	 * @throws {RuntimeError} - Thrown if `rhs` is zero.
 	 */
 	mod(rhs) {
@@ -127,8 +127,8 @@ export default class Int extends Literal {
 	 *
 	 * Note that this will truncate the result of the exponentiation.
 	 *
-	 * @param {Value} rhs - The exponent
-	 * @return {Int} - The result of the exponentiation.
+	 * @param {Value} rhs The exponent
+	 * @return {Int} The result of the exponentiation.
 	 */
 	pow(rhs) {
 		const rhsInt = rhs.toNumber();
@@ -143,8 +143,8 @@ export default class Int extends Literal {
 	/**
 	 * Returns whether `this` is numerically less than `rhs`.
 	 *
-	 * @param {Value} rhs - The value to convert to a number and compare against.
-	 * @return {boolean} - Whether `this` is numerically less than `rhs`.
+	 * @param {Value} rhs The value to convert to a number and compare against.
+	 * @return {boolean} Whether `this` is numerically less than `rhs`.
 	 */
 	cmp(rhs) {
 		return this._data - rhs.toNumber();

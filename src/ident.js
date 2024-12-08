@@ -16,8 +16,8 @@ const ENVIRONMENT = {};
 /**
  * The identifier class within Knight.
  *
- * As per the specs, all identifiers are global. As such, there is no scoping
- * whatsoever: A single `ENVIRONMENT` is used.
+ * As per the specs, all identifiers are global. As such, there is no scoping whatsoever: A single
+ * `ENVIRONMENT` is used.
  */
 export default class Ident extends Value {
 	/** @type {string} */
@@ -26,9 +26,8 @@ export default class Ident extends Value {
 	/**
 	 * Attempts to parse an `Ident` from the `stream`.
 	 *
-	 * @param {Stream} stream - The stream with which to parse.
-	 * @return {Ident|null} - The parsed `Ident`, or `null` if the stream did not
-	 *                        start with an `Ident`.
+	 * @param {Stream} stream The stream with which to parse.
+	 * @return {Ident?} The parsed `Ident`, or `null` if the stream did not start with an `Ident`.
 	 */
 	static parse(stream) {
 		const match = stream.match(/^[a-z_][a-z0-9_]*/);
@@ -39,7 +38,7 @@ export default class Ident extends Value {
 	/**
 	 * Creates a new `Ident` with the given name.
 	 *
-	 * @param {string} ident - The name of this identifier.
+	 * @param {string} ident The name of this identifier.
 	 */
 	constructor(ident) {
 		super();
@@ -61,7 +60,7 @@ export default class Ident extends Value {
 	 *
 	 * Any previously associated `Value` is simply discarded.
 	 *
-	 * @param {Value} value - The value to associate with this identifier's name.
+	 * @param {Value} value The value to associate with this identifier's name.
 	 */
 	assign(value) {
 		ENVIRONMENT[this.#ident] = value;
@@ -70,7 +69,7 @@ export default class Ident extends Value {
 	/**
 	 * Executes this identifier, returning its last assigned value.
 	 *
-	 * @return {Value} - The last value associated with this identifier's name.
+	 * @return {Value} The last value associated with this identifier's name.
 	 * @throws {RuntimeError} - Thrown if this identifier was never assigned to.
 	 */
 	run() {

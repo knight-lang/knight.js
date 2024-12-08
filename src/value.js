@@ -34,8 +34,8 @@ export default class Value {
 	/**
 	 * Attempts to parse out a new value from the given `stream`.
 	 *
-	 * @param {Stream} stream - The stream to parse.
-	 * @return {Value|null} - Returns the parsed value, or `null` if nothing
+	 * @param {Stream} stream The stream to parse.
+	 * @return {Value|null} Returns the parsed value, or `null` if nothing
 	 *                        could be parsed.
 	 */
 	static parse(stream) {

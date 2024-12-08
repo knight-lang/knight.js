@@ -20,7 +20,7 @@ export default class Literal extends Value {
 	/**
 	 * Creates a new `Literal` with the given data.
 	 *
-	 * @param {T} data - The data to associate with this `Literal`.
+	 * @param {T} data The data to associate with this `Literal`.
 	 */
 	constructor(data) {
 		super();
@@ -31,7 +31,7 @@ export default class Literal extends Value {
 	/**
 	 * Running a literal simply returns itself.
 	 *
-	 * @return {Literal} - `this`.
+	 * @return {Literal} `this`.
 	 */
 	run() {
 		return this;
@@ -75,8 +75,8 @@ export default class Literal extends Value {
 	 * A `Literal` is only equal to another instance of the same type_, which
 	 * also has the same `_data`.
 	 *
-	 * @param {Value} rhs - The value to compare against `this`.
-	 * @return {boolean} - Whether `rhs` is a `this.constructor`, and its `_data`
+	 * @param {Value} rhs The value to compare against `this`.
+	 * @return {boolean} Whether `rhs` is a `this.constructor`, and its `_data`
 	 *                     is equivalent to `this`'s.
 	 */
 	eql(rhs) {

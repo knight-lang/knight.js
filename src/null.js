@@ -17,8 +17,8 @@ export default class Null extends Literal {
 	/**
 	 * Attempts to parse a `Null` from the `stream`.
 	 *
-	 * @param {Stream} stream - The stream from which to parse.
-	 * @return {Null|null} - The parsed `Null`, or `null` if the stream did not
+	 * @param {Stream} stream The stream from which to parse.
+	 * @return {Null|null} The parsed `Null`, or `null` if the stream did not
 	 *                       start with a `Null`.
 	 */
 	static parse(stream) {
@@ -64,7 +64,7 @@ export default class Null extends Literal {
 	/**
 	 * Comparisons with `Null` are invalid, and this always fails.
 	 *
-	 * @param {Value} _rhs - Ignored.
+	 * @param {Value} _rhs Ignored.
 	 * @throws {RuntimeError} This is always thrown.
 	 */
 	cmp(_rhs) {

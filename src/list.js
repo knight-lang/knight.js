@@ -12,8 +12,8 @@ export default class List extends Literal {
 	/**
 	 * Attempts to parse an `Int` from the `stream`.
 	 *
-	 * @param {Stream} stream - The stream from which to parse.
-	 * @return {Int|null} - The parsed `Int`, or `null` if the stream did not
+	 * @param {Stream} stream The stream from which to parse.
+	 * @return {Int|null} The parsed `Int`, or `null` if the stream did not
 	 *                      start with a `Int`.
 	 */
 	static parse(stream) {
