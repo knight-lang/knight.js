@@ -108,36 +108,6 @@ export default class List extends Literal {
 	}
 
 	/**
-	 * Returns the sublist `[start .. start + length)` of `this`.
-	 * 
-	 * If the range is out of bounds, an empty list is used.
-	 * 
-	 * @param {Value} start The start index; converted to an integer.
-	 * @param {Value} length The amount of elements; converted to an integer.
-	 * @returns {List} The sublist.
-	 */
-	get(start, length) {
-		start = start.toNumber();
-		length = length.toNumber();
-		return new List(this._data.slice(start, start + length) || []);
-	}
-
-	/**
-	 * Returns a new list where the sublist `[start .. start + length)` of `this` is replaced
-	 * with `repl`.
-	 * 
-	 * This doesn't modify `this`.
-	 * 
-	 * @param {Value} start The start index; converted to an integer.
-	 * @param {Value} length The amount of elements; converted to an integer.
-	 * @param {Value} repl The replacement; converted to a list.
-	 * @returns {List} `this` with the replacement performed.
-	 */
-	set(start, length, repl) {
-		return new List(this._data.toSpliced(start.toNumber(), length.toNumber(), ...repl.toArray()));
-	}
-
-	/**
 	 * Returns whether `this` is equal to `rhs`
 	 * 
 	 * @param {Value} rhs The value to compare against.
@@ -206,6 +176,36 @@ export default class List extends Literal {
 		}
 
 		return new List(this._data.slice(1));
+	}
+
+	/**
+	 * Returns the sublist `[start .. start + length)` of `this`.
+	 * 
+	 * If the range is out of bounds, an empty list is used.
+	 * 
+	 * @param {Value} start The start index; converted to an integer.
+	 * @param {Value} length The amount of elements; converted to an integer.
+	 * @returns {List} The sublist.
+	 */
+	get(start, length) {
+		start = start.toNumber();
+		length = length.toNumber();
+		return new List(this._data.slice(start, start + length) || []);
+	}
+
+	/**
+	 * Returns a new list where the sublist `[start .. start + length)` of `this` is replaced
+	 * with `repl`.
+	 * 
+	 * This doesn't modify `this`.
+	 * 
+	 * @param {Value} start The start index; converted to an integer.
+	 * @param {Value} length The amount of elements; converted to an integer.
+	 * @param {Value} repl The replacement; converted to a list.
+	 * @returns {List} `this` with the replacement performed.
+	 */
+	set(start, length, repl) {
+		return new List(this._data.toSpliced(start.toNumber(), length.toNumber(), ...repl.toArray()));
 	}
 }
 

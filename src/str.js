@@ -26,33 +26,35 @@ export default class Str extends Literal {
 		// match _all_ characters, including `\n` and `\r\n`.
 		const match = stream.match(/^(["'])([\s\S]*?)\1/, 2);
 
-		// If we have a match, return early.
-		if (match !== null) {
-			return new Str(match);
+		if (match === null) {
+			// if we have a starting quote, it means the ending one didn't match.
+			const first = stream.peek();
+			if (first === "'" || first === '"') {
+				throw new ParseError(`Unterminated quote encountered: ${stream}`);
+			}
+
+			return null;
 		}
 
-		// if we have a starting quote, it means the ending one didn't match.
-		const first = stream.peek();
-		if (first === "'" || first === '"') {
-			throw new ParseError(`Unterminated quote encountered: ${stream}`);
-		}
-
-		// Nothing matched, not, implicit `null` return.
+		return new Str(match);
 	}
 
 	/**
-	 * Converts this class to a number, as per the Knight spec.
+	 * Converts the string to a number, as per the Knight spec.
 	 *
-	 * This does effectively what `parseInt` does, except it returns `0` instead
-	 * of `NaN`.
+	 * This does effectively what `parseInt` does, except it returns `0` instead of `NaN`.
 	 *
-	 * @override
 	 * @return {number} The numeric representation of this class.
 	 */
 	toNumber() {
 		return parseInt(this._data, 10) || 0;
 	}
 
+	/**
+	 * Converts the string to an array, by converting each character to a `Str`.
+	 *
+	 * @return {Array<Str>} An array of all characters in the string.
+	 */
 	toArray() {
 		return this._data.split('').map(chr => new Str(chr));
 	}
@@ -86,15 +88,24 @@ export default class Str extends Literal {
 		return new Str(this._data.repeat(rhs.toNumber()));
 	}
 
+	/**
+	 * Returns a negative, zero, or positive number based on whether `rhs` is lexicographically
+	 * larger than, equal to, or smaller than `this`.
+	 *
+	 * @param {Value} rhs The value against which to compare; converted to a string.
+	 * @return {int} a negative, zero, or positive integer.
+	 */
 	cmp(rhs) {
 		rhs = rhs.toString();
 		return this._data < rhs ?  -1 : this._data > rhs ? 1 : 0;
 	}
 
-	ascii() {
-		return new Int(this._data.charCodeAt(0));
-	}
-
+	/**
+	 * Gets the first charcater of the string.
+	 *
+	 * @returns {Str} The first character.
+	 * @throws {RuntimeError} When the string is empty.
+	 */
 	head() {
 		if (this._data.length === 0) {
 			throw new RuntimeError("head on empty string");
@@ -103,6 +114,12 @@ export default class Str extends Literal {
 		return new Str(this._data[0]);
 	}
 
+	/**
+	 * Gets everything but the first character in the string.
+	 *
+	 * @returns {Str} A string containing everything but the first character.
+	 * @throws {RuntimeError} When the character is empty.
+	 */
 	tail() {
 		if (this._data.length === 0) {
 			throw new RuntimeError("tail on empty string");
@@ -111,10 +128,32 @@ export default class Str extends Literal {
 		return new Str(this._data.substr(1));
 	}
 
+	/**
+	 * Returns the substring `[start .. start + length)` of `this`.
+	 *
+	 * If the range is out of bounds, an empty string is used.
+	 *
+	 * @param {Value} start The start index; converted to an integer.
+	 * @param {Value} length The amount of elements; converted to an integer.
+	 * @returns {Str} The substring.
+	 */
 	get(start, length) {
-		return new Str(this._data.substr(start.toNumber(), length.toNumber()) || "");
+		start = start.toNumber();
+		length = length.toNumber();
+		return new Str(this._data.substring(start, start + length) || "");
 	}
 
+	/**
+	 * Returns a new string where the substring `[start .. start + length)` of `this` is replaced
+	 * with `repl`.
+	 *
+	 * This doesn't modify `this`.
+	 *
+	 * @param {Value} start The start index; converted to an integer.
+	 * @param {Value} length The amount of elements; converted to an integer.
+	 * @param {Value} repl The replacement; converted to a list.
+	 * @returns {Str} `this` with the replacement performed.
+	 */
 	set(start, length, repl) {
 		start = start.toNumber();
 		length = length.toNumber();
@@ -124,7 +163,16 @@ export default class Str extends Literal {
 			return new Str(this._data + repl);
 		}
 
-		return new Str(this._data.substr(0, start) + repl + this._data.substr(start + length));
+		return new Str(this._data.substring(0, start) + repl + this._data.substring(start + length));
+	}
+
+	/**
+	 * Returns the first codepoint in this string.
+	 *
+	 * @returns {Int}
+	 */
+	ascii() {
+		return new Int(this._data.charCodeAt(0));
 	}
 }
 
