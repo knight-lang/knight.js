@@ -1,10 +1,9 @@
 import Value from './value.js';
-import { RuntimeError } from './error.js';
 import Literal from './literal.js';
+import { RuntimeError } from './error.js';
 
 /**
- * @typedef {import('./stream.js').Stream} Stream
- * @typedef {import('./value.js').Value} Value
+ * @typedef {import('./stream.js')} Stream
  */
 
 /**
@@ -18,8 +17,7 @@ export default class Null extends Literal {
 	 * Attempts to parse a `Null` from the `stream`.
 	 *
 	 * @param {Stream} stream The stream from which to parse.
-	 * @return {Null|null} The parsed `Null`, or `null` if the stream did not
-	 *                       start with a `Null`.
+	 * @return {Null?} The parsed `Null`, or `null` if the stream did not start with `N`.
 	 */
 	static parse(stream) {
 		return stream.match(/^N[A-Z]*/) && new Null();
@@ -31,34 +29,30 @@ export default class Null extends Literal {
 	}
 
 	/**
-	 * Provides a debugging representation of this class.
+	 * Returns `"null"`.
 	 *
-	 * @return {string}
+	 * @return {'null'}
 	 */
 	dump() {
 		return 'null';
 	}
 
+	/**
+	 * Returns an empty string, as per the Knight specs.
+	 * 
+	 * @returns {''}
+	 */
 	toString() {
 		return '';
 	}
 
+	/**
+	 * Returns an empty array.
+	 * 
+	 * @returns {[]}
+	 */
 	toArray() {
 		return [];
-	}
-
-	/**
-	 * Returns whether or not `this` is equal to `rhs`.
-	 *
-	 * This is simply a more efficient overload of the `eql` function, as we
-	 * only need to check to see if `rhs` is `Null`.
-	 *
-	 * @override
-	 * @param {Value} The value against which to compare.
-	 * @return {boolean} Whether `rhs` is `Null`.
-	 */
-	eql(rhs) {
-		return rhs instanceof Null;
 	}
 
 	/**

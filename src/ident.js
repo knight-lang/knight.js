@@ -2,7 +2,7 @@ import Value from './value.js';
 import { RuntimeError } from './error.js';
 
 /**
- * @typedef {import('./stream.js').Stream} Stream
+ * @typedef {import('./stream.js')} Stream
  */
 
 /**

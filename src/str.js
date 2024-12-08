@@ -1,27 +1,24 @@
 import Value from './value.js';
-import { ParseError } from './error.js';
-import List from './list.js';
 import Int from './int.js';
 import Literal from './literal.js';
+import { ParseError } from './error.js';
 
 /**
- * @typedef {import('./stream.js').Stream} Stream
- * @typedef {import('./value.js').Value} Value
+ * @typedef {import('./stream.js')} Stream
  */
 
 /**
  * The string type within Knight, used to represent textual data.
  *
- * @see Value - For more information on why we don't simply use `string`s.
+ * @see Value For more information on why we don't simply use `string`s.
  * @extends {Literal<string>}
  */
 export default class Str extends Literal {
 	/**
 	 * Attempts to parse a `Str` from the `stream`.
 	 *
-	 * @param {Stream}  stream - The stream from which to parse.
-	 * @returns {Str|null} - The parsed `Str`, or `null` if the stream did not
-	 *                       start with a `Str`.
+	 * @param {Stream} stream The stream from which to parse.
+	 * @return {Str?} The parsed `Str`, or `null` if the stream did not start with a `'` or `"`.
 	 * @throws {ParseError} If a starting quote, but no ending quote, is parsed.
 	 */
 	static parse(stream) {
@@ -29,16 +26,19 @@ export default class Str extends Literal {
 		// match _all_ characters, including `\n` and `\r\n`.
 		const match = stream.match(/^(["'])([\s\S]*?)\1/, 2);
 
-		// if we have a match, return early.
+		// If we have a match, return early.
 		if (match !== null) {
 			return new Str(match);
 		}
 
 		// if we have a starting quote, it means the ending one didn't match.
 		const first = stream.peek();
+		console.log(first);
 		if (first === "'" || first === '"') {
 			throw new ParseError(`Unterminated quote encountered: ${stream}`);
 		}
+
+		// Nothing matched, not, implicit `null` return.
 	}
 
 	/**

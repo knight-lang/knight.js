@@ -1,11 +1,10 @@
 import Value from './value.js';
 import Literal from './literal.js';
-import { RuntimeError } from './error.js';
 import Str from './str.js';
+import { RuntimeError } from './error.js';
 
 /**
- * @typedef {import('./stream.js').Stream} Stream
- * @typedef {import('./value.js').Value} Value
+ * @typedef {import('./stream.js')} Stream
  */
 
 /**
@@ -21,8 +20,7 @@ export default class Int extends Literal {
 	 * Attempts to parse an `Int` from the `stream`.
 	 *
 	 * @param {Stream} stream The stream from which to parse.
-	 * @return {Int|null} The parsed `Int`, or `null` if the stream did not
-	 *                      start with a `Int`.
+	 * @return {Int?} The parsed `Int`, or `null` if the stream did not start with a digit.
 	 */
 	static parse(stream) {
 		const match = stream.match(/^\d+/);
@@ -31,7 +29,7 @@ export default class Int extends Literal {
 	}
 
 	/**
-	 * Provides a debugging representation of this class.
+	 * Returns the int converted to a string.
 	 *
 	 * @return {string}
 	 */
@@ -39,6 +37,13 @@ export default class Int extends Literal {
 		return this.toString();
 	}
 
+	/**
+	 * Returns the list of digits in the int.
+	 * 
+	 * This handles negative integers by multiplying each digit by `-1`.
+	 *
+	 * @returns {Array<Int>}
+	 */
 	toArray() {
 		if (this._data === 0) {
 			return [this];
@@ -53,7 +58,6 @@ export default class Int extends Literal {
 
 		return acc.reverse();
 	}
-
 
 	/**
 	 * Returns a new `Int` that is the result of adding `rhs` to `this`.
@@ -141,15 +145,21 @@ export default class Int extends Literal {
 	}
 
 	/**
-	 * Returns whether `this` is numerically less than `rhs`.
+	 * Returns a negative, zero, or positive number based on whether `rhs` is numerically larger
+	 * than, equal to, or smaller than `this`.
 	 *
-	 * @param {Value} rhs The value to convert to a number and compare against.
-	 * @return {boolean} Whether `this` is numerically less than `rhs`.
+	 * @param {Value} rhs The value against which to compare.
+	 * @return {int} a negative, zero, or positive integer.
 	 */
 	cmp(rhs) {
 		return this._data - rhs.toNumber();
 	}
 
+	/**
+	 * Interprets `this` as a codepoint and returns a `Str` containing it.
+	 * 
+	 * @returns {Str}
+	 */
 	ascii () {
 		return new Str(String.fromCharCode(this._data));
 	}
