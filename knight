@@ -14,7 +14,7 @@ try {
 	run(argv[2] == '-e' ? argv[3] : readFileSync(argv[3]));
 } catch (error) {
 	if (error instanceof KnightError) {
-		console.error("Fatal Error:", error.message);
+		console.error("Knight Error:", error.message);
 		process.exit(1);
 	} else {
 		throw error;
